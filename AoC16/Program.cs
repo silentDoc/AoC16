@@ -16,6 +16,7 @@
             string result = day switch
             {
                 1 => day1(input, part).ToString(),
+                2 => day2(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -28,6 +29,12 @@
             hqfinder.ParseInput(lines);
 
             return hqfinder.Solve(part);
+        }
+
+        static int day2(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
