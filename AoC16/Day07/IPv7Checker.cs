@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace AoC16.Day07
 {
@@ -34,6 +35,36 @@ namespace AoC16.Day07
 
         public bool SupportsTLS
             => supernet.Select(x => hasABBA(x)).Any(x => x) && !hypernet.Select(x => hasABBA(x)).Any(x => x);
+
+        public bool SupportsSSL
+            => CheckSSL();
+
+        bool CheckSSL()
+        {
+            var babs = GetBABs();
+            bool supportsSSL = false;
+            foreach (var bab in babs)
+                supportsSSL |= hypernet.Select(x => x.Contains(bab)).Any(x => x);
+            return supportsSSL;
+        }
+
+        List<string> GetBABs()
+        {
+            List<string> abas = new();
+            foreach(var code in supernet)
+            {
+                for (int i = 0; i < code.Length - 2; i++)
+                    if (code[i] == code[i + 2] && code[i] != code[i + 1])
+                        abas.Add(code.Substring(i, 3));
+            }
+
+            abas = abas.Distinct().ToList();
+            List<string> babs = new();
+            foreach (var aba in abas)
+                babs.Add(aba[1].ToString() + aba[0].ToString() + aba[1].ToString());
+            return babs;
+        }
+
     }
 
      internal class IPv7Checker
@@ -43,6 +74,6 @@ namespace AoC16.Day07
             => lines.ForEach(line => addresses.Add(new IPv7Address(line)));
        
         public int Solve(int part = 1)
-            => (part == 1) ? addresses.Count(x => x.SupportsTLS) : 0;
+            => (part == 1) ? addresses.Count(x => x.SupportsTLS) : addresses.Count(x => x.SupportsSSL);
     }
 }
