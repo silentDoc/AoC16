@@ -9,39 +9,40 @@ namespace AoC16.Day06
 {
     internal class SignalUnjammer
     {
-        List<Dictionary<char, int>> signalInput = new();
+        List<Dictionary<char, int>> signal = new();
 
         void ParseLine(string line)
         {
             for(int pos=0; pos<line.Length; pos++) 
             {
-                if (signalInput[pos].ContainsKey(line[pos]))
-                    signalInput[pos][line[pos]]++;
+                if (signal[pos].ContainsKey(line[pos]))
+                    signal[pos][line[pos]]++;
                 else
-                    signalInput[pos][line[pos]] = 1;
+                    signal[pos][line[pos]] = 1;
             }
         }
 
         public void ParseInput(List<string> lines)
         {
             for (int i = 0; i < lines[0].Length; i++)
-                signalInput.Add(new Dictionary<char, int>());
+                signal.Add(new Dictionary<char, int>());
 
             lines.ForEach(line => ParseLine(line));
         }
 
-        string FindWord()
+        string FindWord(int part = 1)
         {
             StringBuilder word = new();
-            foreach( var dict in signalInput) 
+            foreach( var dict in signal) 
             {
-                char letter = dict.Keys.Where(x => dict[x] == dict.Values.Max()).First();
+                var count = (part ==1) ? dict.Values.Max() : dict.Values.Min();
+                char letter = dict.Keys.Where(x => dict[x] == count).First();
                 word.Append(letter);
             }
             return word.ToString();
         }
 
         public string Solve(int part = 1)
-            => FindWord();
+            => FindWord(part);
     }
 }
