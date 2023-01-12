@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            int day = 2;
-            int part = 2;
+            int day = 3;
+            int part = 1;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -44,7 +44,9 @@
         static int day3(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day03.TriangleChecker checker = new();
+            checker.ParseInput(lines);
+            return checker.Solve(part);
         }
     }
 }
