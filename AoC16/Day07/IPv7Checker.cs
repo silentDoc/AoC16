@@ -12,7 +12,7 @@ namespace AoC16.Day07
     class IPv7Address
     {
         List<string> hypernet = new();
-        List<string> non_hypernet = new();
+        List<string> supernet = new();
 
         public IPv7Address(string inputLine)
         {
@@ -25,15 +25,15 @@ namespace AoC16.Day07
                 if (str.StartsWith("["))
                     hypernet.Add(str);
                 else
-                    non_hypernet.Add(str);
+                    supernet.Add(str);
             }
         }
 
-        bool hasPattern(string code)
+        bool hasABBA(string code)
             => code.Select((val, Index) => (Index<=code.Length-4) ? code[Index] == code[Index + 3] && code[Index + 1] == code[Index + 2] && code[Index] != code[Index + 1] : false).Any(x => x);
 
-        public bool IsValid
-            => non_hypernet.Select(x => hasPattern(x)).Any(x => x) && !hypernet.Select(x => hasPattern(x)).Any(x => x);
+        public bool SupportsTLS
+            => supernet.Select(x => hasABBA(x)).Any(x => x) && !hypernet.Select(x => hasABBA(x)).Any(x => x);
     }
 
      internal class IPv7Checker
@@ -43,6 +43,6 @@ namespace AoC16.Day07
             => lines.ForEach(line => addresses.Add(new IPv7Address(line)));
        
         public int Solve(int part = 1)
-            => (part == 1) ? addresses.Count(x => x.IsValid) : 0;
+            => (part == 1) ? addresses.Count(x => x.SupportsTLS) : 0;
     }
 }
