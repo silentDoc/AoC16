@@ -6,7 +6,7 @@
         {
             int day = 4;
             int part = 1;
-            bool test = true;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -53,7 +53,10 @@
         static int day4(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day04.RoomChecker checker = new();
+            checker.ParseInput(lines);
+
+            return checker.Solve(part);
         }
     }
 }
