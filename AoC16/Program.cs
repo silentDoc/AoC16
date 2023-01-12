@@ -6,7 +6,7 @@
         {
             int day = 7;
             int part = 1;
-            bool test = true;
+            bool test = !true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -81,9 +81,9 @@
         static int day7(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day07.IPv7Checker checker = new();
+            checker.ParseInput(lines);
+            return checker.Solve(part);
         }
-
-
     }
 }
