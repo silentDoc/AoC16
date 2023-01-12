@@ -4,9 +4,9 @@
     {
         static void Main(string[] args)
         {
-            int day = 7;
-            int part = 2;
-            bool test = !true;
+            int day = 8;
+            int part = 1;
+            bool test = true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -22,6 +22,7 @@
                 5 => day5(input, part).ToString(),
                 6 => day6(input, part).ToString(),
                 7 => day7(input, part).ToString(),
+                8 => day8(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -84,6 +85,12 @@
             Day07.IPv7Checker checker = new();
             checker.ParseInput(lines);
             return checker.Solve(part);
+        }
+
+        static int day8(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
