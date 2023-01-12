@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             int day = 4;
-            int part = 1;
+            int part = 2;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();

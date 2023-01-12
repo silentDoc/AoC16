@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +14,8 @@ namespace AoC16.Day04
         public string code;
         public int id;
         public string checksum;
+
+        private readonly string letters = "abcdefghijklmnopqrstuvwxyz";
 
         public Room(string inputLine)
         {
@@ -47,6 +50,21 @@ namespace AoC16.Day04
 
             return check.ToString().Substring(0,5) == checksum;
         }
+
+        public string Decrypt()
+        {
+            string decrypt = code;
+            decrypt = decrypt.Replace("-", " ");
+            StringBuilder decryptedName = new();
+
+            for (int i = 0; i < decrypt.Length; i++)
+                decryptedName.Append(DecryptChar(decrypt[i], id));
+
+            return decryptedName.ToString();
+        }
+
+        char DecryptChar(char source, int rotation)
+            => (!char.IsLetter(source)) ? source : letters[(letters.IndexOf(source) + rotation) % letters.Length];
     }
 
     internal class RoomChecker
@@ -54,8 +72,9 @@ namespace AoC16.Day04
         List<Room> rooms = new();
         public void ParseInput(List<string> lines)
             => lines.ForEach(line => rooms.Add(new Room(line)));
-
+        
         public int Solve(int part = 1)
-            => (part == 1) ? rooms.Where(x => x.IsReal()).Select(r => r.id).Sum() : 0;
+            => (part == 1) ? rooms.Where(x => x.IsReal()).Select(r => r.id).Sum()
+                           : rooms.Where(x => x.IsReal() && x.Decrypt().Contains("northpole object storage")).Select(r => r.id).First();
     }
 }
