@@ -63,14 +63,40 @@ namespace AoC16.Day01
         int Walk(int part = 1)
         {
             Coord currentCoord = new Coord() { lat = 0, lon = 0 };
+            HashSet<Coord> visitedBlocks = new();
+            
             foreach (var instruction in Document)
             {
                 if (instruction.turn == 'R') TurnRight(); 
                 else TurnLeft();
+                
+                var lastPosition = currentCoord;
 
                 var movement = Offset(Orientation, instruction.count);
                 currentCoord.lat += movement.lat;
                 currentCoord.lon += movement.lon;
+
+                if (part == 2)  // Keep all the blocks we go through when advancing
+                {
+                    IEnumerable<int> range = Orientation switch
+                    {
+                        0 => Enumerable.Range(lastPosition.lat + 1, instruction.count),
+                        1 => Enumerable.Range(lastPosition.lon + 1, instruction.count),
+                        2 => Enumerable.Range(currentCoord.lat - 1, instruction.count),
+                        3 => Enumerable.Range(currentCoord.lon - 1, instruction.count),
+                        _ => throw new Exception("Invalid orientation")
+                    };
+
+                    foreach (var i in range)
+                    {
+                        var block = (Orientation == 0 || Orientation == 2) ? new Coord() { lat = i, lon = currentCoord.lon }
+                                                                           : new Coord() { lat = currentCoord.lat, lon = i };
+                        if (!visitedBlocks.Add(block))
+                                return Manhattan(block);
+                    }
+                }
+
+                
             }
             return Manhattan(currentCoord);
         }
