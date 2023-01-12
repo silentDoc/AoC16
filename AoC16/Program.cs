@@ -4,9 +4,9 @@
     {
         static void Main(string[] args)
         {
-            int day = 6;
-            int part = 2;
-            bool test = false;
+            int day = 7;
+            int part = 1;
+            bool test = true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -21,6 +21,7 @@
                 4 => day4(input, part).ToString(),
                 5 => day5(input, part).ToString(),
                 6 => day6(input, part).ToString(),
+                7 => day7(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -76,5 +77,13 @@
             unjammer.ParseInput(lines);
             return unjammer.Solve(part);
         }
+
+        static int day7(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
+        }
+
+
     }
 }
