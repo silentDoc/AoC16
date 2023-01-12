@@ -6,7 +6,7 @@
         {
             int day = 5;
             int part = 1;
-            bool test = true;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -60,10 +60,12 @@
             return checker.Solve(part);
         }
 
-        static int day5(string input, int part)
+        static string day5(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day05.PasswordFinder finder = new();
+            finder.ParseInput(lines);
+            return finder.Solve();
         }
     }
 }
