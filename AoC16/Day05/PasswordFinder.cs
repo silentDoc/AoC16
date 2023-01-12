@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,38 @@ namespace AoC16.Day05
             return password.ToString();
         }
 
-        public string Solve(int part =1)
-            => (part == 1) ? FindPass(5) : "";
+        public string FindPass_v2(int numZeros)
+        {
+            string checkHash = new string("").PadLeft(numZeros, '0');
+            long index = -1;
+            Dictionary<int, char> password_v2 = new();
+
+            while (password_v2.Values.Count < 8)
+            {
+                index++;
+                var hash = CreateMD5(prefix + index.ToString());
+                if (hash.StartsWith(checkHash))
+                {
+                    if (!char.IsDigit(hash[numZeros]))
+                        continue;
+                    int pos = int.Parse(hash[numZeros].ToString());
+                    if (pos > 7)
+                        continue;
+                    if (password_v2.Keys.Contains(pos))
+                        continue;
+                    password_v2[pos] = hash[numZeros + 1];
+                    Trace.WriteLine("Pos : " + pos.ToString() + " ; Value = " + hash[numZeros + 1]);
+                }
+            }
+            StringBuilder password = new();
+            for (int i = 0; i < 8; i++)
+                password.Append(password_v2[i]);
+            
+            return password.ToString();
+        }
+
+        public string Solve(int part = 1)
+            => (part == 1) ? FindPass(5) : FindPass_v2(5);
+
     }
 }

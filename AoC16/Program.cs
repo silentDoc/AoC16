@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             int day = 5;
-            int part = 1;
+            int part = 2;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -65,7 +65,7 @@
             var lines = File.ReadAllLines(input).ToList();
             Day05.PasswordFinder finder = new();
             finder.ParseInput(lines);
-            return finder.Solve();
+            return finder.Solve(part);
         }
     }
 }
