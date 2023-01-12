@@ -6,7 +6,7 @@
         {
             int day = 6;
             int part = 1;
-            bool test = true;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -69,10 +69,12 @@
             return finder.Solve(part);
         }
 
-        static int day6(string input, int part)
+        static string day6(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day06.SignalUnjammer unjammer = new();
+            unjammer.ParseInput(lines);
+            return unjammer.Solve(part);
         }
     }
 }
