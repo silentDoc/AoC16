@@ -17,6 +17,7 @@
             {
                 1 => day1(input, part).ToString(),
                 2 => day2(input, part).ToString(),
+                3 => day3(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -38,6 +39,12 @@
             pin.ParseInput(lines);
 
             return pin.Solve(part);
+        }
+
+        static int day3(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
