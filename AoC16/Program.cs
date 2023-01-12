@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            int day = 25;
+            int day = 1;
             int part = 1;
             bool test = false;
 
@@ -24,7 +24,10 @@
         static int day1(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day01.HQFinder hqfinder = new();
+            hqfinder.ParseInput(lines);
+
+            return hqfinder.Solve(part);
         }
     }
 }
