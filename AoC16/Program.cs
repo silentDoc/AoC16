@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            int day = 1;
-            int part = 2;
+            int day = 2;
+            int part = 1;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -31,10 +31,13 @@
             return hqfinder.Solve(part);
         }
 
-        static int day2(string input, int part)
+        static string day2(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day02.BathroomPinCode pin = new();
+            pin.ParseInput(lines);
+
+            return pin.Solve(part);
         }
     }
 }
