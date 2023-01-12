@@ -4,14 +4,14 @@
     {
         static void Main(string[] args)
         {
-            int day = 5;
-            int part = 2;
-            bool test = false;
+            int day = 6;
+            int part = 1;
+            bool test = true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
 
-            Console.WriteLine("AoC 2015 - Day {0} , Part {1} - Test Data {2}", day, part, test);
+            Console.WriteLine("AoC 2016 - Day {0} , Part {1} - Test Data {2}", day, part, test);
 
             string result = day switch
             {
@@ -20,6 +20,7 @@
                 3 => day3(input, part).ToString(),
                 4 => day4(input, part).ToString(),
                 5 => day5(input, part).ToString(),
+                6 => day6(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -66,6 +67,12 @@
             Day05.PasswordFinder finder = new();
             finder.ParseInput(lines);
             return finder.Solve(part);
+        }
+
+        static int day6(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
