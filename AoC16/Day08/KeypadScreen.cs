@@ -85,23 +85,34 @@ namespace AoC16.Day08
             }
         }
 
-        int FindLitCells()
+        void PreviewDisplay()
+        {
+            Console.WriteLine("");
+            for (int i = 0; i < COL_HEIGHT; i++)
+            {
+                var values = display.Where(c => c.y == i).Select(v => (v.lit) ? "#" : ".").ToList();
+                Console.WriteLine(string.Join("", values));
+            }
+        }
+
+        int FindLitCells(int part = 1)
         {
             InitPanel();
-            Trace.WriteLine(display.Count(x => x.lit).ToString());
             foreach (var ins in instructions)
             {
                 if (ins.operation == "rect") Rect(ins.operandA, ins.operandB);
                 if (ins.operation == "row") Rotate_row(ins.operandA, ins.operandB);
                 if (ins.operation == "column") Rotate_column(ins.operandA, ins.operandB);
-                Trace.WriteLine(display.Count(x => x.lit).ToString());
             }
+
+            if (part == 2)
+                PreviewDisplay();
 
             return display.Count(x => x.lit);
         }
 
         public int Solve(int part = 1)
-            => (part ==1) ? FindLitCells() :0;
+            => FindLitCells(part);
 
     }
 }

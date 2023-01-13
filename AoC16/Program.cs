@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             int day = 8;
-            int part = 1;
+            int part = 2;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -92,7 +92,7 @@
             var lines = File.ReadAllLines(input).ToList();
             Day08.KeypadScreen screen = new();
             screen.ParseInput(lines);
-            return screen.Solve();
+            return screen.Solve(part);
         }
     }
 }
