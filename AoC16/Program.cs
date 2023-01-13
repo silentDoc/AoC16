@@ -6,7 +6,7 @@
         {
             int day = 8;
             int part = 1;
-            bool test = true;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -90,7 +90,9 @@
         static int day8(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day08.KeypadScreen screen = new();
+            screen.ParseInput(lines);
+            return screen.Solve();
         }
     }
 }
