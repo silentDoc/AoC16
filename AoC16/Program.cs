@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             int day = 9;
-            int part = 1;
+            int part = 2;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -96,7 +96,7 @@
             return screen.Solve(part);
         }
 
-        static int day9(string input, int part)
+        static long day9(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
             Day09.SequenceDecompressor decomp = new();

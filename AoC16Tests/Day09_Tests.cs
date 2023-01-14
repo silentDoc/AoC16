@@ -79,7 +79,7 @@ namespace AoC16Tests
         [DataRow("(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN", 445)]
         public void ShouldMarkersInSequence(string input, long expected)
         {
-            var result = _decompressor.Decompress(input);
+            var result = _decompressor.Decompress_v2(input);
             Assert.AreEqual(expected, result);
         }
 
