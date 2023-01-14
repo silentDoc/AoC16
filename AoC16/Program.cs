@@ -6,7 +6,7 @@
         {
             int day = 10;
             int part = 1;
-            bool test = true;
+            bool test = !true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -24,7 +24,7 @@
                 7 => day7(input, part).ToString(),
                 8 => day8(input, part).ToString(),
                 9 => day9(input, part).ToString(),
-                10 => day10(input, part).ToString(),
+                10 => day10(input, part, test).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -106,10 +106,15 @@
             return decomp.Solve(part);
         }
 
-        static int day10(string input, int part)
+        static int day10(string input, int part, bool test)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day10.MicrochipFactory factory = new();
+            factory.ParseInput(lines);
+            var low = (test) ? 2 : 17;
+            var high = (test) ? 5 : 61;
+
+            return factory.Solve(low, high, part);
         }
     }
 }
