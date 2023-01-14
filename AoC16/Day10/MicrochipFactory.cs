@@ -113,26 +113,32 @@ namespace AoC16.Day10
         public void ParseInput(List<string> lines)
             => lines.ForEach(line => ParseInstruction(line));
 
-        private int RunFactory(int low, int high)
+        private int RunFactory(int low, int high, int part = 1)
         {
             foreach (var key in startingAssignations.Keys)
-            { 
-                foreach(var value in startingAssignations[key])
+            {
+                foreach (var value in startingAssignations[key])
                     bots.Where(x => x.BotNumber == key).First().Receive(value);
             }
+            
+            bool canContinue = true;
 
-            while (true)
+            while (canContinue)
             {
+                var somethingHappened = false;
                 foreach (var bot in bots)
                 {
-                    if (bot.CheckValues(low, high))
+                    if (bot.CheckValues(low, high) && part == 1)
                         return bot.BotNumber;
-                    bot.Operate(bots, outputBins);
+                    somethingHappened |= bot.Operate(bots, outputBins);
                 }
+                canContinue &= somethingHappened;
             }
+
+            return outputBins[0].First() * outputBins[1].First() * outputBins[2].First();
         }
 
         public int Solve(int low, int high, int part = 1)
-            => (part == 1) ? RunFactory(low, high) : 0;
+            => RunFactory(low, high, part);
     }
 }
