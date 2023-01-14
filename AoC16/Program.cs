@@ -23,6 +23,7 @@
                 6 => day6(input, part).ToString(),
                 7 => day7(input, part).ToString(),
                 8 => day8(input, part).ToString(),
+                9 => day9(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -93,6 +94,12 @@
             Day08.KeypadScreen screen = new();
             screen.ParseInput(lines);
             return screen.Solve(part);
+        }
+
+        static int day9(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
