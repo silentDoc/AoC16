@@ -8,6 +8,8 @@ namespace AoC16.Day09
 {
     public class SequenceDecompressor
     {
+        string input = "";
+
         public string Decompress(string input)
         {
             var processText = input;
@@ -40,5 +42,11 @@ namespace AoC16.Day09
 
             return sb.ToString();
         }
+
+        public void ParseInput(List<string> lines)
+            => input = lines[0];
+
+        public int Solve(int part)
+            => (part == 1) ? Decompress(input).Length : 0;
     }
 }

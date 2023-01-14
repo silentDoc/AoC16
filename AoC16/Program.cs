@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            int day = 8;
-            int part = 2;
+            int day = 9;
+            int part = 1;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -99,7 +99,10 @@
         static int day9(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day09.SequenceDecompressor decomp = new();
+            decomp.ParseInput(lines);
+
+            return decomp.Solve(part);
         }
     }
 }
