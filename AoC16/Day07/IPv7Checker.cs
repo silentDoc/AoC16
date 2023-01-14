@@ -10,7 +10,7 @@ using System.Threading.Tasks.Dataflow;
 
 namespace AoC16.Day07
 {
-    class IPv7Address
+    public class IPv7Address
     {
         List<string> hypernet = new();
         List<string> supernet = new();
