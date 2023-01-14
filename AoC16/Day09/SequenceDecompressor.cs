@@ -43,6 +43,9 @@ namespace AoC16.Day09
             return sb.ToString();
         }
 
+        public long Decompress_v2(string input)
+            => throw new NotImplementedException();
+
         public void ParseInput(List<string> lines)
             => input = lines[0];
 
