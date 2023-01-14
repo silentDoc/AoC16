@@ -4,9 +4,9 @@
     {
         static void Main(string[] args)
         {
-            int day = 10;
-            int part = 2;
-            bool test = !true;
+            int day = 11;
+            int part = 1;
+            bool test = true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -25,6 +25,7 @@
                 8 => day8(input, part).ToString(),
                 9 => day9(input, part).ToString(),
                 10 => day10(input, part, test).ToString(),
+                11 => day11(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             Console.WriteLine("Result : {0}", result);
@@ -116,5 +117,12 @@
 
             return factory.Solve(low, high, part);
         }
+
+        static int day11(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
+        }
+
     }
 }
