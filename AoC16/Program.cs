@@ -8,7 +8,7 @@ namespace AoC16
         {
             int day = 12;
             int part = 1;
-            bool test = true;
+            bool test = !true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -137,7 +137,10 @@ namespace AoC16
         static int day12(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day12.AssembunnyProcessor asm = new();
+            asm.ParseInput(lines);
+
+            return asm.Solve(part);
         }
     }
 }
