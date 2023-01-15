@@ -45,8 +45,8 @@ namespace AoC16Tests.Common
 
         private static IEnumerable<object[]> TestData_Manhattan()
         {
-            yield return new object[] { new Coord2D(1, 1), (3, 5), 6 };
-            yield return new object[] { new Coord2D(-1, -1), (-3, 5), 10 };
+            yield return new object[] { new Coord2D(1, 1), new Coord2D(3, 5), 6 };
+            yield return new object[] { new Coord2D(-1, -1), new Coord2D(-3, 5), 8 };
         }
 
         [DataTestMethod]
@@ -111,6 +111,14 @@ namespace AoC16Tests.Common
         {
             var result = coord_a.Manhattan(coord_b);
             Assert.AreEqual(expected, result);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(TestData_Deconstruct), DynamicDataSourceType.Method)]
+        public void Should_Deconstruct_To_Tuple(Coord2D coord_a, (int a, int b) expected)
+        {
+            (int aa, int bb) = coord_a;
+            Assert.IsTrue(aa == expected.a && bb == expected.b);
         }
     }
 }
