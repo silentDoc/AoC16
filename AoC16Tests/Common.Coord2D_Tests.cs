@@ -49,6 +49,14 @@ namespace AoC16Tests.Common
             yield return new object[] { new Coord2D(-1, -1), new Coord2D(-3, 5), 8 };
         }
 
+        private static IEnumerable<object[]> TestData_Neighbors()
+        {
+            yield return new object[] { new Coord2D(1, 1), new List<Coord2D>() { new Coord2D(0, 1), new Coord2D(2, 1),
+                                                                                 new Coord2D(1, 0), new Coord2D(1, 2)} };
+            yield return new object[] { new Coord2D(-3, 5), new List<Coord2D>() { new Coord2D(-4, 5), new Coord2D(-2, 5),
+                                                                                  new Coord2D(-3, 4), new Coord2D(-3, 6)} };
+        }
+
         [DataTestMethod]
         [DynamicData(nameof(TestData_Sum), DynamicDataSourceType.Method)]
         public void Should_Sum_2_Coords(Coord2D coord_a, Coord2D coord_b, Coord2D expected)
@@ -119,6 +127,20 @@ namespace AoC16Tests.Common
         {
             (int aa, int bb) = coord_a;
             Assert.IsTrue(aa == expected.a && bb == expected.b);
+        }
+
+        
+        [DataTestMethod]
+        [DynamicData(nameof(TestData_Neighbors), DynamicDataSourceType.Method)]
+        public void Should_Find_Neighbors(Coord2D coord_a, List<Coord2D> expected)
+        {
+            var neighs = coord_a.GetNeighbors().ToList();
+            var test = neighs.Count == expected.Count;
+
+            foreach (var neighbor in neighs)
+                test &= expected.Contains(neighbor);
+
+            Assert.IsTrue(test);
         }
     }
 }

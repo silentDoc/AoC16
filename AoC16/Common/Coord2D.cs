@@ -59,6 +59,14 @@ namespace AoC16.Common
         public int Manhattan(Coord2D other)
             => Math.Abs(x - other.x) + Math.Abs(y - other.y);
 
+        public IEnumerable<Coord2D> GetNeighbors()
+        {
+            yield return new Coord2D(x - 1, y);
+            yield return new Coord2D(x + 1, y);
+            yield return new Coord2D(x, y - 1);
+            yield return new Coord2D(x, y + 1);
+        }
+
         public override int GetHashCode()
         {
             unchecked // Wraps around max value
