@@ -6,7 +6,7 @@
         {
             int day = 11;
             int part = 1;
-            bool test = true;
+            bool test = !true;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -121,7 +121,9 @@
         static int day11(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day11.RadioactiveElevator elevator = new();
+            elevator.ParseInput(lines);
+            return elevator.Solve(part);
         }
 
     }
