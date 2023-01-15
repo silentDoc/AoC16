@@ -1,11 +1,13 @@
-﻿namespace AoC16
+﻿using System.Diagnostics;
+
+namespace AoC16
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             int day = 11;
-            int part = 2;
+            int part = 1;
             bool test = !true;
 
             string input = "./Input/day" + day.ToString();
@@ -123,7 +125,12 @@
             var lines = File.ReadAllLines(input).ToList();
             Day11.RadioactiveElevator elevator = new();
             elevator.ParseInput(lines);
-            return elevator.Solve(part);
+            Stopwatch st = new();
+            st.Start();
+            var ret = elevator.Solve(part);
+            st.Stop();
+            Console.WriteLine( st.Elapsed.TotalSeconds.ToString() );
+            return ret;
         }
 
     }

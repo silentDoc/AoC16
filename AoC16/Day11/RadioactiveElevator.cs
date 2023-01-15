@@ -48,6 +48,23 @@ namespace AoC16.Day11
             return sb.ToString();
         }
 
+        // With the first state representation method, part 2 takes 10 minutes to solve. But here's the idea, the materials
+        // are SWAPPABLE. That means that we do not care about the material, only about the count of each think by floor. 
+        // This should speedup the process a lot (Part1 : 13,57s vs 0,5s -- And Part2 :  608s with v1 vs 2s !!!)
+        public string StateSignature2()
+        {
+            StringBuilder sb = new();
+            sb.Append("E:" + elevatorFloor.ToString());
+            for (int i = 1; i <= 4; i++)
+            {
+                var num_rtg = Floors[i].Count(x => x.type == ItemType.RTG);
+                var num_chip = Floors[i].Count(x => x.type == ItemType.Microchip);
+                var str = "G:" + num_rtg.ToString() +",M:" + num_chip.ToString();
+                sb.Append(";F" + i.ToString() + ":" + str);
+            }
+            return sb.ToString();
+        }
+
         public State(int elevatorFloor = 1)
         {
             Floors = new();
@@ -190,7 +207,7 @@ namespace AoC16.Day11
             while (activeStates.Count > 0)
             { 
                 var currentState = activeStates.Dequeue();
-                if (!KnownStates.Add(currentState.StateSignature()))
+                if (!KnownStates.Add(currentState.StateSignature2()))
                     continue;
 
                 if (currentState.AllItemsInTopFloor)
