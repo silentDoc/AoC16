@@ -16,7 +16,6 @@ namespace AoC16.Day11
 
     class Item
     {
-        public int Id;     // Id will come handy when representing states, since the item order does not matter
         public string material;
         public ItemType type;
 
@@ -24,8 +23,6 @@ namespace AoC16.Day11
         {
             this.material = material;
             this.type = type;
-            var iId = DateTime.Now.Ticks.ToString();
-            this.Id = int.Parse(iId.Substring(iId.Length - 8));
         }
     }
 
@@ -37,21 +34,6 @@ namespace AoC16.Day11
         public int cost = 0;
 
         public string StateSignature()
-        {
-            StringBuilder sb = new();
-            sb.Append("E:" + elevatorFloor.ToString());
-            for (int i = 1; i <= 4; i++)
-            {
-                var str = string.Join(",", Floors[i].Select(x => x.Id.ToString()).OrderBy(x => x).ToList());
-                sb.Append(";F" + i.ToString() + ":" + str);
-            }
-            return sb.ToString();
-        }
-
-        // With the first state representation method, part 2 takes 10 minutes to solve. But here's the idea, the materials
-        // are SWAPPABLE. That means that we do not care about the material, only about the count of each think by floor. 
-        // This should speedup the process a lot (Part1 : 13,57s vs 0,5s -- And Part2 :  608s with v1 vs 2s !!!)
-        public string StateSignature2()
         {
             StringBuilder sb = new();
             sb.Append("E:" + elevatorFloor.ToString());
@@ -177,18 +159,17 @@ namespace AoC16.Day11
                 string materialName = isChip ? item.Replace("-compatible microchip", "").Trim() : item.Replace(" generator", "").Trim();
                 var itemToAdd = new Item(materialName, type);
                 startingState.AddItem(itemToAdd, floor);
-                
             }
 
             startingState.cost = 0;
             startingState.elevatorFloor = 1;
-            Trace.WriteLine(startingState.StateSignature());
         }
 
         public void ParseInput(List<string> lines)
             => lines.ForEach(line => ParseLine(line));
 
 
+        // Standard BFS - The important part is on the State class
         public int Simulate(int part = 1)
         {
             HashSet<string> KnownStates = new();
@@ -203,11 +184,10 @@ namespace AoC16.Day11
             }
 
             activeStates.Enqueue(startingState);
-
             while (activeStates.Count > 0)
             { 
                 var currentState = activeStates.Dequeue();
-                if (!KnownStates.Add(currentState.StateSignature2()))
+                if (!KnownStates.Add(currentState.StateSignature()))
                     continue;
 
                 if (currentState.AllItemsInTopFloor)
@@ -217,7 +197,6 @@ namespace AoC16.Day11
                 foreach (var s in nextStates)
                     activeStates.Enqueue(s);
             }
-
             return -1;
         }
 
