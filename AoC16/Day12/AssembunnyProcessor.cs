@@ -66,7 +66,7 @@ namespace AoC16.Day12
         {
             registers["a"] = 0;
             registers["b"] = 0;
-            registers["c"] = 0;
+            registers["c"] = (part ==1) ? 0 : 1;
             registers["d"] = 0;
             int currentIndex = 0;
             int value = 0;
