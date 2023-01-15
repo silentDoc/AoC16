@@ -19,6 +19,14 @@ namespace AoC16.Day11
         public int Id;     // Id will come handy when representing states, since the item order does not matter
         public string material;
         public ItemType type;
+
+        public Item(string material, ItemType type)
+        {
+            this.material = material;
+            this.type = type;
+            var iId = DateTime.Now.Ticks.ToString();
+            this.Id = int.Parse(iId.Substring(iId.Length - 8));
+        }
     }
 
     class State
@@ -150,12 +158,11 @@ namespace AoC16.Day11
                 bool isChip = item.IndexOf("-compatible microchip") != -1;
                 ItemType type = isChip ? ItemType.Microchip : ItemType.RTG;
                 string materialName = isChip ? item.Replace("-compatible microchip", "").Trim() : item.Replace(" generator", "").Trim();
-                var iId = DateTime.Now.Ticks.ToString();
-                int itemId = int.Parse(iId.Substring(iId.Length - 8));
-                var itemToAdd = new Item() { material = materialName, type = type, Id = itemId };
+                var itemToAdd = new Item(materialName, type);
                 startingState.AddItem(itemToAdd, floor);
                 
             }
+
             startingState.cost = 0;
             startingState.elevatorFloor = 1;
             Trace.WriteLine(startingState.StateSignature());
@@ -169,6 +176,15 @@ namespace AoC16.Day11
         {
             HashSet<string> KnownStates = new();
             Queue<State> activeStates = new();
+
+            if (part == 2)
+            {
+                startingState.AddItem(new Item("elerium", ItemType.RTG), 1);
+                startingState.AddItem(new Item("elerium", ItemType.Microchip), 1);
+                startingState.AddItem(new Item("dilithium", ItemType.RTG), 1);
+                startingState.AddItem(new Item("dilithium", ItemType.Microchip), 1);
+            }
+
             activeStates.Enqueue(startingState);
 
             while (activeStates.Count > 0)
