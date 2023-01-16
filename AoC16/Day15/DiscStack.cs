@@ -41,6 +41,9 @@ namespace AoC16.Day15
 
         int FindTime(int part = 1)
         {
+            if (part == 2)
+                discStack.Add(new Disc(7, 11, 0));
+
             List<int> targetPositions = new();
             var diff = -1;
             foreach(var disc in discStack) 
