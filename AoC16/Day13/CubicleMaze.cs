@@ -44,6 +44,9 @@ namespace AoC16.Day13
             List<Cubicle> retVal = new();
             foreach (var n in neigh)
             {
+                if (n.y < 0 || n.x < 0)
+                    continue;
+
                 var cub = new Cubicle(n, Number, Steps + 1);
                 if(cub.IsOpen())
                     retVal.Add(cub);
@@ -68,18 +71,26 @@ namespace AoC16.Day13
             startingCubicle.Number = inputNumber;
             Coord2D finalPosition = new Coord2D(31,39);
 
-            HashSet<int> KnownStates = new();
+            HashSet<int> visited_cubicles = new();
             Queue<Cubicle> active_Cubicles = new();
+            HashSet<Coord2D> cubicles_within50steps = new HashSet<Coord2D>();
 
             active_Cubicles.Enqueue(startingCubicle);
 
             while (active_Cubicles.Count > 0)
             {
+                if (part == 2 && active_Cubicles.Count(x => x.Steps <= 50) == 0)
+                    break;
+
                 var currentCubicle = active_Cubicles.Dequeue();
                 
-                if (!KnownStates.Add(currentCubicle.GetHash()))
+                if (!visited_cubicles.Add(currentCubicle.GetHash()))
                     continue;
 
+                if(part ==2 && currentCubicle.Steps <= 50)
+                    cubicles_within50steps.Add(currentCubicle.position);
+
+                
                 if (currentCubicle.position == finalPosition)
                     return currentCubicle.Steps;
 
@@ -87,7 +98,7 @@ namespace AoC16.Day13
                 foreach (var c in nextCubs)
                     active_Cubicles.Enqueue(c);
             }
-            return -1;
+            return cubicles_within50steps.Count;
         }
 
         public int Solve(int part = 1)
