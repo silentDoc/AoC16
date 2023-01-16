@@ -4,22 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AoC16.Common;
 
 namespace AoC16.Day05
 {
     internal class PasswordFinder
     {
         string prefix = "";
-        public static string CreateMD5(string input)
-        {
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-            {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                return Convert.ToHexString(hashBytes);
-            }
-        }
 
         public void ParseInput(List<string> lines)
             => prefix = lines[0].Trim();
@@ -32,7 +23,7 @@ namespace AoC16.Day05
 
             while (password.Length < 8)
             {
-                var hash = CreateMD5(prefix + index.ToString());
+                var hash = Crypto.CreateMD5(prefix + index.ToString());
                 if (hash.StartsWith(checkHash))
                     password.Append(hash[numZeros]);
                 index++;
@@ -49,7 +40,7 @@ namespace AoC16.Day05
             while (password_v2.Values.Count < 8)
             {
                 index++;
-                var hash = CreateMD5(prefix + index.ToString());
+                var hash = Crypto.CreateMD5(prefix + index.ToString());
                 if (hash.StartsWith(checkHash))
                 {
                     if (!char.IsDigit(hash[numZeros]))
