@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
+
 
 namespace AoC16.Day15
 {
     class Disc
     {
-        public int id = 0;
         public int num_positions = 0;
         public int startingPosition = 0;
 
-        public Disc(int id, int positions, int startingPosition)
+        public Disc(int positions, int startingPosition)
         {
-            this.id = id;
             this.num_positions = positions;
             this.startingPosition = startingPosition;
         }
@@ -33,7 +26,7 @@ namespace AoC16.Day15
         {
             Regex inputRegex = new Regex(@"Disc #(\d) has (\d+) positions; at time=(\d), it is at position (\d+)");
             var groups = inputRegex.Match(line).Groups;
-            return new Disc(int.Parse(groups[1].Value), int.Parse(groups[2].Value), int.Parse(groups[4].Value));
+            return new Disc(int.Parse(groups[2].Value), int.Parse(groups[4].Value));
         }
 
         public void ParseInput(List<string> lines)
@@ -42,7 +35,7 @@ namespace AoC16.Day15
         int FindTime(int part = 1)
         {
             if (part == 2)
-                discStack.Add(new Disc(7, 11, 0));
+                discStack.Add(new Disc(11, 0));
 
             List<int> targetPositions = new();
             var diff = -1;
@@ -65,7 +58,7 @@ namespace AoC16.Day15
         }
 
         int module(int number, int mod)
-            => (number > 0) ? number % mod : number + mod;
+            => (number > 0) ? number % mod : module(number + mod, mod);
 
         public int Solve(int part = 1)
             => FindTime(part);
