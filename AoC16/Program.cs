@@ -7,7 +7,7 @@ namespace AoC16
         static void Main(string[] args)
         {
             int day = 14;
-            int part = 1;
+            int part = 2;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -156,7 +156,7 @@ namespace AoC16
         static int day14(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            Day14.OneTimePadKey keygen = new();
+            Day14.KeyGen keygen = new();
             keygen.ParseInput(lines);
             return keygen.Solve(part);
         }
