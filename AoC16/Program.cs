@@ -8,7 +8,7 @@ namespace AoC16
         {
             int day = 15;
             int part = 1;
-            bool test = !false;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -165,7 +165,10 @@ namespace AoC16
         static int day15(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day15.DiscStack stack = new();
+            stack.ParseInput(lines);
+
+            return stack.Solve(part);
         }
     }
 }
