@@ -8,6 +8,9 @@ namespace AoC16.Day16
 {
     public class RandomDataGen
     {
+        string initialState = "";
+        int diskLength  = 0;
+
         public string DragonCurve(string input)
         {
             StringBuilder sb = new StringBuilder(input);
@@ -22,7 +25,6 @@ namespace AoC16.Day16
             return sb.ToString();
         }
 
-
         public string Checksum(string input)
         {
             StringBuilder checksum = new();
@@ -31,8 +33,26 @@ namespace AoC16.Day16
                 checksum.Append(g[0] == g[1] ? '1' : '0');
 
             var check = checksum.ToString();
-
             return check.Length % 2 == 0 ? Checksum(check) : check;
         }
+
+        string FindCheckSum(int part)
+        {
+            var dragon = initialState;
+            while (dragon.Length < diskLength)
+                dragon = DragonCurve(dragon);
+            dragon = dragon.Substring(0, diskLength);
+            return Checksum(dragon);
+        }
+
+        public void ParseInput(List<string> lines)
+        {
+            var elements = lines[0].Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            initialState = elements[0];
+            diskLength = int.Parse(elements[1]);
+        }
+
+        public string Solve(int part = 1)
+            => FindCheckSum(part);
     }
 }

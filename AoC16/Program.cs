@@ -8,13 +8,14 @@ namespace AoC16
         {
             int day = 16;
             int part = 1;
-            bool test = !false;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
 
             Console.WriteLine("AoC 2016 - Day {0} , Part {1} - Test Data {2}", day, part, test);
-
+            Stopwatch st = new Stopwatch();
+            st.Start();
             string result = day switch
             {
                 1 => day1(input, part).ToString(),
@@ -35,7 +36,9 @@ namespace AoC16
                 16 => day16(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
+            st.Stop();
             Console.WriteLine("Result : {0}", result);
+            Console.WriteLine("Ellapsed : {0}", st.Elapsed.TotalSeconds);
         }
 
         static int day1(string input, int part)
@@ -130,12 +133,8 @@ namespace AoC16
             var lines = File.ReadAllLines(input).ToList();
             Day11.RadioactiveElevator elevator = new();
             elevator.ParseInput(lines);
-            Stopwatch st = new();
-            st.Start();
-            var ret = elevator.Solve(part);
-            st.Stop();
-            Console.WriteLine( st.Elapsed.TotalSeconds.ToString() );
-            return ret;
+
+            return elevator.Solve(part);
         }
 
         static int day12(string input, int part)
@@ -172,10 +171,13 @@ namespace AoC16
             return stack.Solve(part);
         }
 
-        static int day16(string input, int part)
+        static string day16(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day16.RandomDataGen gen = new();
+            gen.ParseInput(lines);
+
+            return gen.Solve(part);
         }
     }
 }
