@@ -50,3 +50,7 @@ In this example, the correct checksum would therefore be  `01100`.
 The first disk you have to fill has length  `272`. Using the initial state in your puzzle input,  _what is the correct checksum_?
 
 Your puzzle input is  `01111001100111011`.
+
+## --- Part Two ---
+
+The second disk you have to fill has length  `35651584`. Again using the initial state in your puzzle input,  _what is the correct checksum_  for this disk?
