@@ -38,6 +38,9 @@ namespace AoC16.Day16
 
         string FindCheckSum(int part)
         {
+            if (part == 2)
+                diskLength = 35651584;
+
             var dragon = initialState;
             while (dragon.Length < diskLength)
                 dragon = DragonCurve(dragon);
