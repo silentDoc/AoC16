@@ -55,9 +55,7 @@ namespace AoC16.Day17
         public void ParseInput(List<string> lines)
             => seedHash = lines[0].Trim();
 
-        // Standard BFS - The important part is on the State class
-        // The nature of the problem leads me to think that we will not have
-        // any visited state
+        // Hashing also means that we will not have any visited state
         public string NavigateVault(int part = 1)
         {
             HashSet<string> KnownStates = new();
@@ -65,20 +63,33 @@ namespace AoC16.Day17
             State startingState = new State(new Coord2D(0,0), seedHash);
 
             Coord2D exit = new Coord2D(3, 3);
+            List<string> endingHashes = new();
             
             activeStates.Enqueue(startingState);
             while (activeStates.Count > 0)
             {
                 var currentState = activeStates.Dequeue();
-                
+
                 if (currentState.position == exit)
-                    return currentState.hashkey.Substring(seedHash.Length);
+                { 
+                    if (part == 1)
+                        return currentState.hashkey.Substring(seedHash.Length);
+                    else
+                    {
+                        endingHashes.Add(currentState.hashkey);
+                        continue;
+                    }
+                }
 
                 var nextStates = currentState.GetNextStates();
                 foreach (var s in nextStates)
                     activeStates.Enqueue(s);
             }
-            return "Boo";
+
+            var lastHash = endingHashes.Last();
+            lastHash = lastHash.Substring(seedHash.Length);
+
+            return lastHash.Length.ToString();
         }
 
         public string Solve(int part = 1)
