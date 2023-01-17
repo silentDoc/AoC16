@@ -9,6 +9,12 @@ namespace AoC16.Common
 {
     public class Coord2D : IEquatable<Coord2D>
     {
+        public enum Arrangement
+        { 
+            UpDownLeftRight = 0,
+            UpRightDownLeft = 1
+        }
+
         public int x = 0; 
         public int y = 0;
 
@@ -59,12 +65,23 @@ namespace AoC16.Common
         public int Manhattan(Coord2D other)
             => Math.Abs(x - other.x) + Math.Abs(y - other.y);
 
-        public IEnumerable<Coord2D> GetNeighbors()
+        public IEnumerable<Coord2D> GetNeighbors(Arrangement arrange = Arrangement.UpRightDownLeft)
         {
-            yield return new Coord2D(x - 1, y);
-            yield return new Coord2D(x + 1, y);
-            yield return new Coord2D(x, y - 1);
-            yield return new Coord2D(x, y + 1);
+            if (arrange == Arrangement.UpRightDownLeft)
+            {
+                // Up - Right - Down - Left
+                yield return new Coord2D(x, y - 1);
+                yield return new Coord2D(x + 1, y);
+                yield return new Coord2D(x, y + 1);
+                yield return new Coord2D(x - 1, y);
+            }
+            else
+            {
+                yield return new Coord2D(x, y - 1);
+                yield return new Coord2D(x, y + 1);
+                yield return new Coord2D(x - 1, y);
+                yield return new Coord2D(x + 1, y);
+            }
         }
 
         public override int GetHashCode()

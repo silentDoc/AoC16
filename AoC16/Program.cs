@@ -8,7 +8,7 @@ namespace AoC16
         {
             int day = 17;
             int part = 1;
-            bool test = !false;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -181,11 +181,13 @@ namespace AoC16
             return gen.Solve(part);
         }
 
-        static int day17(string input, int part)
+        static string day17(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
+            Day17.VaultNavigator navi = new();
+            navi.ParseInput(lines);
 
-            return 0;
+            return navi.Solve(part);
         }
     }
 }
