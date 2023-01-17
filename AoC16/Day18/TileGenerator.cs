@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 
 namespace AoC16.Day18
 {
@@ -42,6 +43,9 @@ namespace AoC16.Day18
 
         int CountSafeTiles(int part =1)
         {
+            if (part == 2)
+                rowCount = 400000;      // Part 2 takes 4,334 secs, quite acceptable but I think that using StringBuilder has made me skip the point of the day
+
             var currentRow = startingRow;
             StringBuilder sb = new();
 
