@@ -36,6 +36,7 @@ namespace AoC16
                 16 => day16(input, part).ToString(),
                 17 => day17(input, part).ToString(),
                 18 => day18(input, part).ToString(),
+                19 => day19(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             st.Stop();
@@ -198,6 +199,12 @@ namespace AoC16
             tilegen.ParseInput(lines);
 
             return tilegen.Solve(part);
+        }
+
+        static int day19(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
