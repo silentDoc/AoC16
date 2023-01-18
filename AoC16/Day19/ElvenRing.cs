@@ -48,9 +48,31 @@ namespace AoC16.Day19
                     goes_out.next.previous = goes_out.previous;
                     thief = thief.next;
                 }
-                return thief.id;
             }
-            else return 0;
+            else
+            {
+                // part 2
+                int index_first_goes_out = numElves / 2 + 1;
+                goes_out = thief;
+                while (goes_out.id != index_first_goes_out)
+                    goes_out = goes_out.next;
+
+                int currentElfCount = numElves;
+                // As the circle reduces, we should keep track of where is our position (thief) and where is the position of the elf that goes out
+                while (goes_out != thief)
+                {
+                    goes_out.previous.next = goes_out.next;         // we disconnect the one who goes out from his next and previous
+                    goes_out.next.previous = goes_out.previous;
+                    
+                    goes_out = goes_out.next;
+                    if(currentElfCount %2 == 1)
+                        goes_out = goes_out.next;   // Yet another one when the count is odd
+                    
+                    currentElfCount--;
+                    thief = thief.next;
+                }
+            }
+            return thief.id;
         }
 
         public int Solve(int part = 1)
