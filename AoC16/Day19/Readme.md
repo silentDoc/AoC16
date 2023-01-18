@@ -83,3 +83,5 @@ For example, with five Elves (again numbered  `1`  to  `5`):
 So, with  _five_  Elves, the Elf that sits starting in position  `2`  gets all the presents.
 
 With the number of Elves given in your puzzle input,  _which Elf now gets all the presents?_
+
+-- See the problem that yields the puzzle : [The Josephus Problem](https://www.youtube.com/watch?v=uCsD3ZGzMgE) --
