@@ -22,6 +22,7 @@ namespace AoC16.Day19
 
         int PlayCircle(int part = 1)
         {
+#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
             // Double linked list
             var thief = new Elf();
             var goes_out = new Elf();
@@ -43,6 +44,7 @@ namespace AoC16.Day19
             {
                 while (goes_out != thief)
                 {
+
                     goes_out = thief.next;
                     goes_out.previous.next = goes_out.next;         // we disconnect the one who goes out from his next and previous
                     goes_out.next.previous = goes_out.previous;
@@ -73,7 +75,10 @@ namespace AoC16.Day19
                 }
             }
             return thief.id;
+#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
         }
+
+
 
         public int Solve(int part = 1)
             => PlayCircle(part);
