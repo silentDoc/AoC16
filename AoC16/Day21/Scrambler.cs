@@ -52,7 +52,6 @@ namespace AoC16.Day21
             this.what = what;
             this.c1 = c1;
         }
-
     }
 
     public class Scrambler
@@ -71,7 +70,6 @@ namespace AoC16.Day21
         public string Swap(string input, char a, char b)
             => Swap(input, input.IndexOf(a), input.IndexOf(b));
 
-
         public string Reverse(string input, int start, int end)
         {
             string strStart = (start > 0) ? input.Substring(0, start) : "";
@@ -84,7 +82,6 @@ namespace AoC16.Day21
             return strStart + strReverse + strEnd;
         }
 
-
         public string Move(string input, int source, int destination)
         {
             var ch = input[source];
@@ -92,7 +89,6 @@ namespace AoC16.Day21
             str = str.Remove(source, 1);
             return str.Insert(destination, ch.ToString());
         }
-            
 
         public string Rotate(string input, char target)
         { 
@@ -104,14 +100,24 @@ namespace AoC16.Day21
             return str;
         }
 
+        public string Undo_Rotate(string input, char target)
+        {
+            // Brute force attempt
+            bool found = false;
+            var str = input;
+            while (!found)
+            {
+                str = RotateLeft(str, 1);
+                found = Rotate(str, target) == input;
+            }
+            return str;
+        }
 
         public string RotateLeft(string input, int count)
             => string.Concat(input.AsSpan(count % input.Length), input.AsSpan(0, count % input.Length));
         
-        
         public string RotateRight(string input, int count)
             => string.Concat(input.Substring((input.Length-count) % input.Length), input.Substring(0, (input.Length - count) % input.Length));
-
 
         void ParseInstruction(string line)
         {
@@ -134,7 +140,6 @@ namespace AoC16.Day21
                 "rev" => new ScrambleStep(Instruction.Reverse, int.Parse(groups[1]), int.Parse(groups[2])),
                 _ => throw new InvalidDataException("Unknonwn scramble step")
             };
-
             steps.Add(newStep);
         }
 
@@ -146,14 +151,12 @@ namespace AoC16.Day21
                 ParseInstruction(line);
         }
 
-        string Scramble(int part = 1)
+        string Scramble()  // Part 1
         {
             var currentString = startingString;
 
             foreach (var step in steps)
             {
-                Trace.WriteLine("In : " + currentString + " : " + " Op : " + step.what.ToString());
-
                 currentString = step.what switch
                 {
                     Instruction.SwapPos => Swap(currentString, step.pos1, step.pos2),
@@ -165,14 +168,32 @@ namespace AoC16.Day21
                     Instruction.Reverse => Reverse(currentString, step.pos1, step.pos2),
                     _ => throw new InvalidOperationException("Unknonwn scramble insruction")
                 };
-                Trace.WriteLine("out : " + currentString );
-                Trace.WriteLine("------------------------------");
             }
+            return currentString;
+        }
 
+        string Unscramble()  // Part 2
+        {
+            var currentString = "fbgdceah"; // Part 2 Input
+            for(int index = steps.Count-1; index >=0; index--)
+            {
+                var step = steps[index];
+                currentString = step.what switch
+                {
+                    Instruction.SwapPos => Swap(currentString, step.pos1, step.pos2),
+                    Instruction.SwapLetter => Swap(currentString, step.c1, step.c2),
+                    Instruction.RotateLeft => RotateRight(currentString, step.pos1),
+                    Instruction.RotateRight => RotateLeft(currentString, step.pos1),
+                    Instruction.RotatePosLetter => Undo_Rotate(currentString, step.c1),
+                    Instruction.Move => Move(currentString, step.pos2, step.pos1),
+                    Instruction.Reverse => Reverse(currentString, step.pos1, step.pos2),
+                    _ => throw new InvalidOperationException("Unknonwn scramble insruction")
+                };
+            }
             return currentString;
         }
 
         public string Solve(int part = 1)
-            => Scramble(part);
+            => (part == 1) ? Scramble() : Unscramble();
     }
 }
