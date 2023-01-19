@@ -6,9 +6,9 @@ namespace AoC16
     {
         static void Main(string[] args)
         {
-            int day = 21;
-            int part = 2;
-            bool test = false;
+            int day = 22;
+            int part = 1;
+            bool test = !false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -39,6 +39,7 @@ namespace AoC16
                 19 => day19(input, part).ToString(),
                 20 => day20(input, part).ToString(),
                 21 => day21(input, part).ToString(),
+                22 => day22(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             st.Stop();
@@ -227,6 +228,12 @@ namespace AoC16
             scr.ParseInput(lines);
             
             return scr.Solve(part);
+        }
+
+        static int day22(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
