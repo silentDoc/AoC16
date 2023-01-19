@@ -8,7 +8,7 @@ namespace AoC16
         {
             int day = 21;
             int part = 1;
-            bool test = !false;
+            bool test = false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -223,7 +223,10 @@ namespace AoC16
         static string day21(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return "";
+            Day21.Scrambler scr = new();
+            scr.ParseInput(lines);
+            
+            return scr.Solve(part);
         }
     }
 }
