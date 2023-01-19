@@ -12,7 +12,7 @@ namespace AoC16Tests
         [DataRow( 2, 5 ,  4, 7 , false)]
         [DataRow( -3, 18 , 4, 7 , true)]
         [DataRow( 2, 10 ,  14, 17 , false)]
-        public void Should_Check_FullyContains(int start_a, int end_a, int start_b, int end_b, bool expected)
+        public void Should_Check_FullyContains(long start_a, long end_a, long start_b, long end_b, bool expected)
         {
             IPRange ip_a = new IPRange(start_a, end_a);
             IPRange ip_b = new IPRange(start_b, end_b);
@@ -27,7 +27,7 @@ namespace AoC16Tests
         [DataRow( 2, 5 , 4, 7 , false)]
         [DataRow(4, 7, -3, 18 , true)]
         [DataRow( 2, 10 ,14, 17 , false)]
-        public void Should_Check_IsFullyContained(int start_a, int end_a, int start_b, int end_b, bool expected)
+        public void Should_Check_IsFullyContained(long start_a, long end_a, long start_b, long end_b, bool expected)
         {
             IPRange ip_a = new IPRange(start_a, end_a);
             IPRange ip_b = new IPRange(start_b, end_b);
@@ -43,7 +43,7 @@ namespace AoC16Tests
         [DataRow( 6, 15 ,  4, 7 , false)]
         [DataRow( 4, 7 ,  -3, 18 , false)]
         [DataRow( 2, 10 ,  14, 17 , false)]
-        public void Should_Check_OverlapsLow(int start_a, int end_a, int start_b, int end_b, bool expected)
+        public void Should_Check_OverlapsLow(long start_a, long end_a, long start_b, long end_b, bool expected)
         {
             IPRange ip_a = new IPRange(start_a, end_a);
             IPRange ip_b = new IPRange(start_b, end_b);
@@ -59,7 +59,7 @@ namespace AoC16Tests
         [DataRow( 6, 15 ,  4, 7 , true)]
         [DataRow( 4, 7 ,  -3, 18 , false)]
         [DataRow( 2, 10 , 14, 17 , false)]
-        public void Should_Check_OverlapsHigh(int start_a, int end_a, int start_b, int end_b, bool expected)
+        public void Should_Check_OverlapsHigh(long start_a, long end_a, long start_b, long end_b, bool expected)
         {
             IPRange ip_a = new IPRange(start_a, end_a);
             IPRange ip_b = new IPRange(start_b, end_b);
@@ -75,7 +75,7 @@ namespace AoC16Tests
         [DataRow(6, 15, 4, 7, true)]
         [DataRow(4, 7, -3, 18, false)]
         [DataRow(2, 10, 14, 17, false)]
-        public void Should_Check_Overlaps(int start_a, int end_a, int start_b, int end_b, bool expected)
+        public void Should_Check_Overlaps(long start_a, long end_a, long start_b, long end_b, bool expected)
         {
             IPRange ip_a = new IPRange(start_a, end_a);
             IPRange ip_b = new IPRange(start_b, end_b);
@@ -91,7 +91,7 @@ namespace AoC16Tests
         [DataRow(6, 15, 4, 7, true)]
         [DataRow(4, 7, -3, 18, true)]
         [DataRow(2, 10, 14, 17, false)]
-        public void Should_Check_Touches(int start_a, int end_a, int start_b, int end_b, bool expected)
+        public void Should_Check_Touches(long start_a, long end_a, long start_b, long end_b, bool expected)
         {
             IPRange ip_a = new IPRange(start_a, end_a);
             IPRange ip_b = new IPRange(start_b, end_b);
