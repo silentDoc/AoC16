@@ -58,7 +58,7 @@ namespace AoC16.Day20
         public void ParseInput(List<string> lines)
             => lines.ForEach(line => allRanges.Add(ParseLine(line)));
 
-        public long FindMinWhiteListed()
+        public long FindMinWhiteListed(int part =1)
         {
             List<IPRange> mergedRanges = allRanges.OrderBy(x => x.start).ToList();
 
@@ -82,17 +82,23 @@ namespace AoC16.Day20
                 }
             }
 
-            // Find the first range that leaves any address between him and the following
-            mergedRanges = mergedRanges.OrderBy(x => x.start).ToList();
-            int i = 0;
-            for (i = 0; i < mergedRanges.Count-1; i++)
-                if (mergedRanges[i].end < mergedRanges[i + 1].start - 1)
-                    break;
-
-            return mergedRanges[i].end + 1;
+            if (part == 1)
+            {
+                // Find the first range that leaves any address between him and the following
+                mergedRanges = mergedRanges.OrderBy(x => x.start).ToList();
+                int i = 0;
+                for (i = 0; i < mergedRanges.Count - 1; i++)
+                    if (mergedRanges[i].end < mergedRanges[i + 1].start - 1)
+                        break;
+                return mergedRanges[i].end + 1;
+            }
+            // Part 2
+            long whitelisted = 4294967296;
+            long blacklisted = mergedRanges.Select(x => x.end - x.start + 1).Sum();
+            return whitelisted - blacklisted;
         }
 
         public long Solve(int part = 1)
-            => (part == 1) ? FindMinWhiteListed() : 0;
+            => FindMinWhiteListed(part);
     }
 }
