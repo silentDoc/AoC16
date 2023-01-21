@@ -1,12 +1,4 @@
 ﻿using AoC16.Common;
-using AoC16.Day13;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AoC16.Day22
 {
@@ -70,9 +62,10 @@ namespace AoC16.Day22
             }
             
             var emptyPos = gridMap.Keys.First(c => gridMap[c] == '_');
-            var movesToPositionEmptyNodeBeside =  Simulate(emptyPos, new Coord2D(x2 - 1, 0));
-            var movesToMoveTheGoalData = 5 * Simulate(new Coord2D(x1, 0), new Coord2D(x2-1, 0)) +1; // 5 moves = 1 for moving data + 4 for moving empty for each step, plus only one for the last one
-
+            // Find all the moves needed to place the empty node in front of the target data
+            var movesToPositionEmptyNodeBeside =  BFS(emptyPos, new Coord2D(x2 - 1, 0));
+            // 5 moves = 1 for moving data + 4 for moving empty node in front again for each step, plus only one for the last swap
+            var movesToMoveTheGoalData = 5 * BFS(new Coord2D(x1, 0), new Coord2D(x2-1, 0)) +1; 
             return movesToPositionEmptyNodeBeside + movesToMoveTheGoalData;
         }
 
@@ -84,22 +77,16 @@ namespace AoC16.Day22
             {
                 if (node.used == 0)
                     continue;
-                foreach (var comp in nodes.Where(x => x != node))
-                {
-                    if (processedNodes.Contains(comp.position))
-                        continue;
-                    
+                foreach (var comp in nodes.Where(x => x != node && !processedNodes.Contains(x.position)))
                     if (node.used <= comp.available)
                         viablePairs++;
-                }
                 processedNodes.Add(node.position);
             }
-
             return viablePairs;
         }
 
         // Good old BFS that takes into account walls calculated in "PrettyPrint" method
-        public int Simulate(Coord2D start, Coord2D target)
+        public int BFS(Coord2D start, Coord2D target)
         {
             HashSet<Coord2D> visited_nodes = new();
             Queue<(Coord2D pos, int cost)> active_nodes = new();
@@ -119,9 +106,9 @@ namespace AoC16.Day22
                 if (currentNode.pos == target)
                     return currentNode.cost;
 
-                var neigh = currentNode.pos.GetNeighbors().Where(c => c.x >= x1 && c.x <= x2 && c.y >= y1 && c.y <= y2).ToList();
+                var neighs = currentNode.pos.GetNeighbors().Where(c => c.x >= x1 && c.x <= x2 && c.y >= y1 && c.y <= y2).ToList();
 
-                foreach (var c in neigh)
+                foreach (var c in neighs)
                     if (gridMap[c]!='#')
                         active_nodes.Enqueue((c, currentNode.cost+1));
             }
