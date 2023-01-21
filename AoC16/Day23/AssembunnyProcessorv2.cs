@@ -1,13 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AoC16.Day23
+﻿namespace AoC16.Day23
 {
     class Instruction_v2
     {
@@ -75,6 +66,9 @@ namespace AoC16.Day23
                         break;
                     program[newIndex].Toggle();
                     break;
+                case "mul":
+                    setVal(arg2, getVal(arg1, registers) * getVal(arg2, registers), registers); 
+                    break;
                 default:
                     throw new InvalidOperationException("Unknown command - " + cmd);
             }
@@ -95,10 +89,19 @@ namespace AoC16.Day23
 
         int RunProgram(int part = 1)
         {
-            registers["a"] = (part == 1) ? 7 : 1;
+            registers["a"] = (part == 1) ? 7 : 12;
             registers["b"] = 0;
             registers["c"] = 0;
             registers["d"] = 0;
+
+            if (part == 2)
+            {
+                program[5] = new Instruction_v2("cpy c a",5);
+                program[6] = new Instruction_v2("mul d a", 6);
+                program[7] = new Instruction_v2("cpy 0 d", 7);
+                program[8] = new Instruction_v2("cpy 0 c", 8);
+            }
+
             int currentIndex = 0;
 
             while (currentIndex < program.Count)
