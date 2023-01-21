@@ -6,9 +6,9 @@ namespace AoC16
     {
         static void Main(string[] args)
         {
-            int day = 22;
-            int part = 2;
-            bool test = false;
+            int day = 23;
+            int part = 1;
+            bool test = !false;
 
             string input = "./Input/day" + day.ToString();
             input += (test) ? "_test.txt" : ".txt";
@@ -40,6 +40,7 @@ namespace AoC16
                 20 => day20(input, part).ToString(),
                 21 => day21(input, part).ToString(),
                 22 => day22(input, part).ToString(),
+                23 => day23(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             st.Stop();
@@ -237,6 +238,14 @@ namespace AoC16
             grid.ParseInput(lines);
 
             return grid.Solve(part);
+        }
+
+        static int day23(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            //Day12.AssembunnyProcessor asm = new();
+            //asm.ParseInput(lines);
+            return 0;
         }
     }
 }
