@@ -6,8 +6,8 @@ namespace AoC16
     {
         static void Main(string[] args)
         {
-            int day = 23;
-            int part = 2;
+            int day = 24;
+            int part = 1;
             bool test = false;
 
             string input = "./Input/day" + day.ToString();
@@ -252,7 +252,9 @@ namespace AoC16
         static int day24(string input, int part)
         {
             var lines = File.ReadAllLines(input).ToList();
-            return 0;
+            Day24.AirDuctNavigator navi = new();
+            navi.ParseInput(lines);
+            return navi.Solve(part);
         }
     }
 }
