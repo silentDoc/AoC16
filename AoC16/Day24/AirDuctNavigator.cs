@@ -61,13 +61,15 @@ namespace AoC16.Day24
             return 0;
         }
 
-        void FindCombinations(List<int> visited, List<int> available, Dictionary<(int, int), int> costs ,int currentCost)
+        void FindCombinations(List<int> visited, List<int> available, Dictionary<(int, int), int> costs ,int currentCost, int part =1)
         {
             int currentNode = visited.Last();
             if (available.Count == 0)
             {
                 Route result = new Route();
                 result.totalCost = currentCost;
+                if (part == 2)
+                    result.totalCost += costs[(currentNode, 0)];
                 result.sequence = visited.ToList();
                 routes.Add(result);
                 return;
@@ -79,11 +81,11 @@ namespace AoC16.Day24
                 var newVisited = visited.ToList();
                 newAvailable.Remove(nextNode);
                 newVisited.Add(nextNode);
-                FindCombinations(newVisited, newAvailable, costs, currentCost + costs[(currentNode, nextNode)]);
+                FindCombinations(newVisited, newAvailable, costs, currentCost + costs[(currentNode, nextNode)], part);
             }
         }
 
-        int FindRouteVisitingNodes()
+        int FindRouteVisitingNodes(int part = 1)
         {
             int numNodes = map.Values.Count(x => x != '.' && x != '#');
             List<Coord2D> interestingPoints = new();
@@ -124,12 +126,12 @@ namespace AoC16.Day24
             for (int i = 1; i < numNodes; i++)
                 availableNodes.Add(i);
 
-            FindCombinations(visitedNodes, availableNodes, costs, 0);
+            FindCombinations(visitedNodes, availableNodes, costs, 0, part);
 
             return routes.Min(x => x.totalCost);
         }
 
         public int Solve(int part = 1)
-            => (part == 1) ? FindRouteVisitingNodes() : 0;
+            => FindRouteVisitingNodes(part);
     }
 }
