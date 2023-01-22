@@ -19,9 +19,8 @@
         }
 
         int getVal(string regOrVal, Dictionary<string, int> registers)
-            => int.TryParse(regOrVal, out var value) ? value
-                : registers.ContainsKey(regOrVal) ? registers[regOrVal]
-                : 0;
+            => registers.ContainsKey(regOrVal) ? registers[regOrVal]
+                                               : int.Parse(regOrVal);
 
         void setVal(string regOrVal, int value, Dictionary<string, int> registers)
         {
@@ -66,7 +65,7 @@
                         break;
                     program[newIndex].Toggle();
                     break;
-                case "mul":
+                case "mul": // Part 2 
                     setVal(arg2, getVal(arg1, registers) * getVal(arg2, registers), registers); 
                     break;
                 default:
@@ -94,7 +93,7 @@
             registers["c"] = 0;
             registers["d"] = 0;
 
-            if (part == 2)
+            if (part == 2) // To speed up, create new instruction to replace multiply block by addition
             {
                 program[5] = new Instruction_v2("cpy c a",5);
                 program[6] = new Instruction_v2("mul d a", 6);
