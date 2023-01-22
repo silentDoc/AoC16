@@ -41,6 +41,7 @@ namespace AoC16
                 21 => day21(input, part).ToString(),
                 22 => day22(input, part).ToString(),
                 23 => day23(input, part).ToString(),
+                24 => day24(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             st.Stop();
@@ -246,6 +247,12 @@ namespace AoC16
             Day23.AssembunnyProcessorV2 asm = new();
             asm.ParseInput(lines);
             return asm.Solve(part);
+        }
+
+        static int day24(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            return 0;
         }
     }
 }
