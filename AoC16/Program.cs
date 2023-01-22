@@ -42,6 +42,7 @@ namespace AoC16
                 22 => day22(input, part).ToString(),
                 23 => day23(input, part).ToString(),
                 24 => day24(input, part).ToString(),
+                25 => day25(input, part).ToString(),
                 _ => throw new ArgumentException("Wrong day number - unimplemented")
             };
             st.Stop();
@@ -255,6 +256,14 @@ namespace AoC16
             Day24.AirDuctNavigator navi = new();
             navi.ParseInput(lines);
             return navi.Solve(part);
+        }
+
+        static int day25(string input, int part)
+        {
+            var lines = File.ReadAllLines(input).ToList();
+            Day23.AssembunnyProcessorV2 asm = new();
+            asm.ParseInput(lines);
+            return asm.Solve(part);
         }
     }
 }
